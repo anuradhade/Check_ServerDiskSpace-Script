@@ -1,0 +1,19 @@
+#!/bin/bash
+
+USER=user01
+
+IP=(182.26.29.155 182.26.29.156 182.26.29.157 182.26.29.158 182.26.29.159)
+
+for SERVERIP in "${IP[@]}" ; do
+    echo $SERVERIP
+
+DISKSPACE=$(ssh $USER@$SERVERIP 'df -h | grep /$' | awk '{ print $5}' |  cut -d'%' -f1)
+  
+  if [ $DISKSPACE -ge 90 ]; then
+    echo $SERVERIP" - out of space 90%"
+  else
+     echo $SERVERIP" - No issue in space "
+  fi
+
+
+done
